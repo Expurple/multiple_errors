@@ -11,4 +11,5 @@ and this project adheres to
 
 ### Added
 
+- Functions `fail_all`, `fail_all_vec`
 - Macro `return_multiple_errors!`

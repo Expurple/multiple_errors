@@ -4,20 +4,41 @@ Propagate multiple errors instead of just the first one.
 
 ## Description
 
-Rust's built-in `?` operator causes an early return on the first encountered
-error. However,
+Rust's `?` operator and `Iterator::collect::<Result<_, _>>` return early on the
+first encountered error. However,
 [sometimes](https://users.rust-lang.org/t/accumulating-multiple-errors-error-products/93730)
-we want to execute multiple independent fallible actions and then report all
-errors at once.
+we want to execute multiple independent actions and then report all errors at
+once. Or turn all results into errors if there is at least one error.
 
-This crate covers this use case and aims to become an "umbrella" for more "mass
-error handling" fuctionality.
+This crate covers these use cases and aims to become an easily googlable "hub" for:
+
+- more "mass error handling" fuctionality
+- knowledge about related functionality in other crates
+
+Think of `multiple_errors` as
+[itertools](https://github.com/rust-itertools/itertools). It's also a
+lightweight "pure logic" crate with no dependencies, and should be suitable for
+`no_std` and old MSRVs. I haven't worked on this yet, please open an issue or a
+pull request if you need this.
 
 ## Example
 
 ```rust
-use multiple_errors::return_multiple_errors;
+use multiple_errors::{fail_all_vec, return_multiple_errors};
 use multiple_errors::testing_prelude::*;
+        
+// fail_all_vec:
+
+let err = fail_all_vec(
+    vec![Ok(A), Err(ErrA), Ok(A)],
+    |res| res.err().map(HighLevelErr::from).unwrap_or(HighLevelErr::B(ErrB))
+);
+assert_eq!(err, Err(vec![ErrB.into(), ErrA.into(), ErrB.into()]));
+
+let ok = fail_all_vec(vec![Ok(A), Ok(A)], |_: Result<_, ErrA>| ErrC);
+assert_eq!(ok, Ok(vec![A, A]));
+
+// return_multiple_errors:
 
 fn a_b_c() -> Result<(A, B, C), Vec<HighLevelErr>> {
     return_multiple_errors!(
@@ -36,14 +57,6 @@ fn a_b_c() -> Result<(A, B, C), Vec<HighLevelErr>> {
 }
 ```
 
-## Details
-
-Currently, `multiple_errors` is a lightweight "pure logic" crate with no
-dependencies, similar to
-[itertools](https://github.com/rust-itertools/itertools). It should be (at least
-partially) suitable for `no_std` and old MSRVs. Please open an issue or pull
-request if you need these features.
-
 ## Similar crates
 
 - [frunk::validated::Validated](https://docs.rs/frunk/0.4.2/frunk/validated/enum.Validated.html)
@@ -53,6 +66,15 @@ request if you need these features.
 
     It achieves similar goals to `return_multiple_errors!`, but in a more
     abstract, type-heavy and composable way.
+
+- [itertools::Itertools::partition_result](https://docs.rs/itertools/0.12.1/itertools/trait.Itertools.html#method.partition_result)
+    and more general
+    [partition_map](https://docs.rs/itertools/0.12.1/itertools/trait.Itertools.html#method.partition_map)
+
+    > Partition a sequence of Results into one list of all the Ok elements and
+    > another list of all the Err elements.
+
+    This is often useful, use `itertools` for this.
 
 ## License
 
