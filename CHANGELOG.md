@@ -9,6 +9,10 @@ and this project adheres to
 
 ## \[Unreleased]
 
+## \[1.0.0] - 2024-04-08
+
+Initial release.
+
 ### Added
 
 - Functions `fail_all`, `fail_all_vec`
