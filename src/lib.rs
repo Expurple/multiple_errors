@@ -3,6 +3,9 @@
 #[doc(hidden)]
 pub mod testing_prelude;
 
+mod collect;
+pub use collect::CollectVecResult;
+
 mod fail_all;
 pub use fail_all::{fail_all, fail_all_vec};
 

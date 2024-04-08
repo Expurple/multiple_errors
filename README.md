@@ -24,21 +24,21 @@ pull request if you need this.
 ## Example
 
 ```rust
-use multiple_errors::{fail_all_vec, return_multiple_errors};
+use multiple_errors::{fail_all_vec, return_multiple_errors, CollectVecResult};
 use multiple_errors::testing_prelude::*;
-        
-// fail_all_vec:
+
+assert_eq!(
+    [Err(ErrA), Ok(A), Err(ErrA)].into_iter().collect_vec_result(),
+    // Collected all errors, not just the first one
+    Err(vec![ErrA, ErrA])
+);
 
 let err = fail_all_vec(
     vec![Ok(A), Err(ErrA), Ok(A)],
     |res| res.err().map(HighLevelErr::from).unwrap_or(HighLevelErr::B(ErrB))
 );
+// Same length as the original, each element turned into an error.
 assert_eq!(err, Err(vec![ErrB.into(), ErrA.into(), ErrB.into()]));
-
-let ok = fail_all_vec(vec![Ok(A), Ok(A)], |_: Result<_, ErrA>| ErrC);
-assert_eq!(ok, Ok(vec![A, A]));
-
-// return_multiple_errors:
 
 fn a_b_c() -> Result<(A, B, C), Vec<HighLevelErr>> {
     return_multiple_errors!(
@@ -74,7 +74,11 @@ fn a_b_c() -> Result<(A, B, C), Vec<HighLevelErr>> {
     > Partition a sequence of Results into one list of all the Ok elements and
     > another list of all the Err elements.
 
-    This is often useful, use `itertools` for this.
+    If you need both lists, just use
+    [itertools](https://github.com/rust-itertools/itertools). If you discard
+    `Ok`s in case of errors, you can use
+    `CollectVecResult::collect_vec_result()` that returns
+    `Result<Vec<T>, Vec<E>>`. It's more precise and efficient.
 
 ## License
 

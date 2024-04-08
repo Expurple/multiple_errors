@@ -9,6 +9,12 @@ and this project adheres to
 
 ## \[Unreleased]
 
+## \[1.1.0] - 2024-04-08
+
+### Added
+
+- Iterator trait `CollectVecResult` with method `collect_vec_result`.
+
 ## \[1.0.0] - 2024-04-08
 
 Initial release.

@@ -34,6 +34,7 @@
 ///     [Ok(A), Err(ErrA), Ok(A)],
 ///     |res| res.err().map(HighLevelErr::from).unwrap_or(HighLevelErr::B(ErrB))
 /// );
+/// // Each element turned into an error.
 /// assert_eq!(err, Err([ErrB.into(), ErrA.into(), ErrB.into()]));
 /// ```
 pub fn fail_all<I, T, E1, E2, F>(
@@ -72,10 +73,11 @@ where
 ///     vec![Ok(A), Err(ErrA), Ok(A)],
 ///     |res| res.err().map(HighLevelErr::from).unwrap_or(HighLevelErr::B(ErrB))
 /// );
+/// // Same length as the original, each element turned into an error.
 /// assert_eq!(err, Err(vec![ErrB.into(), ErrA.into(), ErrB.into()]));
-///
-/// let ok = fail_all_vec(vec![Ok(A), Ok(A)], |_: Result<_, ErrA>| ErrC);
-/// assert_eq!(ok, Ok(vec![A, A]));
+/// #
+/// # let ok = fail_all_vec(vec![Ok(A), Ok(A)], |_: Result<_, ErrA>| ErrC);
+/// # assert_eq!(ok, Ok(vec![A, A]));
 /// ```
 pub fn fail_all_vec<T, E1, E2, F>(results: Vec<Result<T, E1>>, f: F) -> Result<Vec<T>, Vec<E2>>
 where
