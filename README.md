@@ -59,13 +59,22 @@ fn a_b_c() -> Result<(A, B, C), Vec<HighLevelErr>> {
 
 ## Similar crates
 
+- [lazy_errors](https://docs.rs/lazy_errors/0.7.0/lazy_errors/index.html)
+  
+  > Effortlessly create, group, and nest arbitrary errors, and defer error handling ergonomically.
+  
+  This crate is `return_multiple_errors!` done right! It appeared a few months
+  later than mine. If it had existed, I would have probably just used it.
+
 - [frunk::validated::Validated](https://docs.rs/frunk/0.4.2/frunk/validated/enum.Validated.html)
 
     > A Validated is either an Ok holding an HList or an Err, holding a vector
     > of collected errors.
 
-    It achieves similar goals to `return_multiple_errors!`, but in a more
-    abstract, type-heavy and composable way.
+    This is somewhat similar to
+    [lazy_errors](https://docs.rs/lazy_errors/0.7.0/lazy_errors/index.html) and
+    `return_multiple_errors!`, but seems more abstract and type-heavy, the docs
+    are harder to follow.
 
 - [itertools::Itertools::partition_result](https://docs.rs/itertools/0.12.1/itertools/trait.Itertools.html#method.partition_result)
     and more general
