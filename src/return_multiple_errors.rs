@@ -25,17 +25,19 @@
 /// #
 /// fn a_b_c() -> Result<(A, B, C), Vec<HighLevelErr>> {
 ///     return_multiple_errors!(
+///         // Annotate the "common" error type for the container of errors.
 ///         let mut errors: Vec<HighLevelErr> = vec![];
-///         // Get some `Result`s:
+///         // Get some `Result`s.
 ///         let a = action_a();
 ///         let b = action_b();
 ///         let c = action_c();
+///         // If there are any errors, they are implicitly converted and collected.
 ///         if_there_are_errors {
-///             // Already converted and collected
 ///             return Err(errors);
 ///         }
 ///     );
-///     // Already unwrapped
+///     // And here we can proceed on the happy path, with already-unwrapped `Ok` values.
+///     // `a`, `b`, and `c` are no longer `Result`s. They have been shadowed.
 ///     Ok((a, b, c))
 /// }
 /// ```

@@ -27,32 +27,39 @@ pull request if you need this.
 use multiple_errors::{fail_all_vec, return_multiple_errors, CollectVecResult};
 use multiple_errors::testing_prelude::*;
 
+// We want to collect into a `Result`, but preserve all errors, not just the first one:
 assert_eq!(
     [Err(ErrA), Ok(A), Err(ErrA)].into_iter().collect_vec_result(),
-    // Collected all errors, not just the first one
+    // Collected all errors, not just the first one.
     Err(vec![ErrA, ErrA])
 );
 
+// We want to turn each `Result` into an error, if there's at least one error:
 let err = fail_all_vec(
     vec![Ok(A), Err(ErrA), Ok(A)],
+    // We provide a callback for "turning into an error".
     |res| res.err().map(HighLevelErr::from).unwrap_or(HighLevelErr::B(ErrB))
 );
 // Same length as the original, each element turned into an error.
 assert_eq!(err, Err(vec![ErrB.into(), ErrA.into(), ErrB.into()]));
 
+// We want to perform some independent fallible actions (with different return types)
+// and then return a non-empty `Vec` of errors or proceed on the happy path:
 fn a_b_c() -> Result<(A, B, C), Vec<HighLevelErr>> {
     return_multiple_errors!(
+        // Annotate the "common" error type for the container of errors.
         let mut errors: Vec<HighLevelErr> = vec![];
-        // Get some `Result`s:
+        // Get some `Result`s.
         let a = action_a();
         let b = action_b();
         let c = action_c();
+        // If there are any errors, they are implicitly converted and collected.
         if_there_are_errors {
-            // Already converted and collected
             return Err(errors);
         }
     );
-    // Already unwrapped
+    // And here we can proceed on the happy path, with already-unwrapped `Ok` values.
+    // `a`, `b`, and `c` are no longer `Result`s. They have been shadowed.
     Ok((a, b, c))
 }
 ```
