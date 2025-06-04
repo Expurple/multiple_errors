@@ -1,6 +1,6 @@
 [package]
 name = "multiple_errors"
-version = "1.1.0"
+version = "1.1.1"
 edition = "2021"
 authors = ["Dmitrii Aleksandrov <adk2300@gmail.com>"]
 documentation = "https://docs.rs/multiple_errors/"

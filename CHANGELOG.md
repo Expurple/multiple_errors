@@ -9,9 +9,12 @@ and this project adheres to
 
 ## \[Unreleased]
 
+## \[1.1.1] - 2025-06-04
+
 ### Changed
 
 - Updated the author's contact info.
+- Improved the docs. Mentioned `lazy_errors` as an alternative crate.
 
 ## \[1.1.0] - 2024-04-08
 
