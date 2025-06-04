@@ -9,6 +9,10 @@ and this project adheres to
 
 ## \[Unreleased]
 
+### Changed
+
+- Updated the author's contact info.
+
 ## \[1.1.0] - 2024-04-08
 
 ### Added
