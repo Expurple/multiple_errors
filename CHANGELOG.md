@@ -9,6 +9,10 @@ and this project adheres to
 
 ## \[Unreleased]
 
+## Fixed
+
+- Fixed the copyright holder in `LICENCE-MIT`.
+
 ## \[1.1.1] - 2025-06-04
 
 ### Changed
