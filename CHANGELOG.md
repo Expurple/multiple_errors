@@ -9,6 +9,8 @@ and this project adheres to
 
 ## \[Unreleased]
 
+## \[1.1.3] - 2025-07-14
+
 ### Fixed
 
 - Fixed the copyright holder in `LICENSE-APACHE`.
