@@ -9,11 +9,15 @@ and this project adheres to
 
 ## \[Unreleased]
 
+## Fixed
+
+- Fixed the copyright holder in `LICENSE-APACHE`.
+
 ## \[1.1.2] - 2025-07-14
 
 ## Fixed
 
-- Fixed the copyright holder in `LICENCE-MIT`.
+- Fixed the copyright holder in `LICENSE-MIT`.
 
 ## \[1.1.1] - 2025-06-04
 
