@@ -67,9 +67,9 @@ fn a_b_c() -> Result<(A, B, C), Vec<HighLevelErr>> {
 ## Similar crates
 
 - [lazy_errors](https://docs.rs/lazy_errors/0.7.0/lazy_errors/index.html)
-  
+
   > Effortlessly create, group, and nest arbitrary errors, and defer error handling ergonomically.
-  
+
   This crate is `return_multiple_errors!` done right! It appeared a few months
   later than mine. If it had existed, I would have probably just used it.
 
@@ -95,6 +95,13 @@ fn a_b_c() -> Result<(A, B, C), Vec<HighLevelErr>> {
     `Ok`s in case of errors, you can use
     `CollectVecResult::collect_vec_result()` that returns
     `Result<Vec<T>, Vec<E>>`. It's more precise and efficient.
+
+- [rustc](https://github.com/rust-lang/rust/) diagnostics system ???
+
+  The Rust compiler has an advanced system for reporting multiple errors and
+  warnings at once, controlling [lint
+  levels](https://doc.rust-lang.org/rustc/lints/levels.html), highlighting error
+  locations in the source code, etc.
 
 ## License
 

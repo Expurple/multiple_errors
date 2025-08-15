@@ -9,6 +9,8 @@ and this project adheres to
 
 ## \[Unreleased]
 
+- Mentioned `rustc` diagnostics as a potentially related solution.
+
 ## \[1.1.3] - 2025-07-14
 
 ### Fixed
